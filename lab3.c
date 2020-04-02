@@ -33,7 +33,6 @@
  \*****************************************************************************/
 
 
-//test change
 
 /*****************************************************************************\
  *                                  Global data                                *
@@ -52,8 +51,6 @@ int NextEvent[MAX_NUMBER_DEVICES] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 Status DeviceHasEventWaiting = 0;
 
-int HIGHEST_PRIORITY_DEVICE_INDEX = 0;
-int LOWEST_PRIORITY_DEVICE_INDEX = 1; //in the case of 2 devices, number is always NUM_DEVICE-1
 
 
 
@@ -65,7 +62,8 @@ int LOWEST_PRIORITY_DEVICE_INDEX = 1; //in the case of 2 devices, number is alwa
 void Control(void);
 void InterruptRoutineHandlerDevice(void);
 void BookKeeping();
-void EnqueueEvent(Status Flags);
+void EnqueueEvents(Status Flags);
+void EnqueueEvent(Status *Flags);
 void DequeueHighestPriorityEvent();
 
 
@@ -85,7 +83,6 @@ void DequeueHighestPriorityEvent();
 
 int main (int argc, char **argv) {
 
-	LOWEST_PRIORITY_DEVICE_INDEX = (*argv[0]) - 1;
 	if (Initialization(argc,argv)){
 		Control();
 	} 
@@ -102,46 +99,29 @@ void Control(void){
 
 	while (1) 
 	{
+		if (Flags > 0) 
+		{
+			EnqueueEvent(&Flags);
+		}
 		DequeueHighestPriorityEvent();
 	}
 
 }
 
-int deviceLookup(Status Flags)
-{
-	unsigned int device_index = 0;
-	while( Flags >>=1)
-	{
-		device_index++;
-	}
-	return device_index;
-}
-
 void EnqueueEvents(Status deviceQueue) 
 {
-	int device = 0;
-	while(deviceQueue >> device > 0)
-	{
-		if(deviceQueue & (1 << device) == 1)
-		{
-			EnqueueEvent(device);
-		}
+	int device_index = 0;
 
-	}
 
 }
 
-void EnqueueEvent(Status Flags)
+void EnqueueEvent(Status *Flags)
 {
 	unsigned int device_index = 0;
-	while (device_index < MAX_NUMBER_DEVICES) {
-		if(Flags & (1 << device_index))
-		{
-			break;
-		}
+	while (device_index < MAX_NUMBER_DEVICES && !((*Flags) & (1 <<device_index))) {
 		device_index++;
 	}
-	EventsTotalPerDevice[device_index] = EventsTotalPerDevice[device_index] + 1;
+	EventsTotalPerDevice[device_index] = EventsTotalPerDevice[device_index] + 1.0;
 	Event eventToBeQueued = BufferLastEvent[device_index];
 	if (QueueSizes[device_index] >= MAX_QUEUE_SIZE)
 	{
@@ -158,8 +138,9 @@ void EnqueueEvent(Status Flags)
 		NextStorage[device_index] = (NextStorage[device_index] + 1) & (MAX_QUEUE_SIZE - 1); 
 
 		QueueSizes[device_index]++;
-		printf("Enqueued Event for device: %d, at position %d\n", device_index, NextStorage[device_index]); 
+//		printf("Enqueued Event for device: %d, at position %d\n", device_index, NextStorage[device_index]); 
 	}
+	(*Flags) = (*Flags) & ~(1<<device_index);
 
 }
 
@@ -174,10 +155,10 @@ void DequeueHighestPriorityEvent()
 	} else 
 	{
 
-		printf("Deqeueing Event for device: %d Postion: %d\n", device_index, NextEvent[device_index]);
+//		printf("Deqeueing Event for device: %d Postion: %d\n", device_index, NextEvent[device_index]);
 		Server(&DeviceQueues[device_index][NextEvent[device_index]]);
 		AvgTurnaroundTimePerDevice[device_index] += Now() - DeviceQueues[device_index][NextEvent[device_index]].When;
-		EventsServedPerDevice[device_index]++;
+		EventsServedPerDevice[device_index] = EventsServedPerDevice[device_index] + 1.0;
 		QueueSizes[device_index]--;
 		if (QueueSizes[device_index] == 0) 
 		{
@@ -196,10 +177,7 @@ void DequeueHighestPriorityEvent()
  \***********************************************************************/
 void InterruptRoutineHandlerDevice(void){
 	printf("An event occured at %f  Flags = %d \n", Now(), Flags);
-	// Put Here the most urgent steps that cannot wait
-	EnqueueEvent(Flags);
-	DeviceHasEventWaiting |= Flags;
-	Flags = Flags && 0;
+	EnqueueEvent(&Flags); //Enqueus the First Event in the Flag Array
 }
 
 
@@ -243,17 +221,17 @@ void BookKeeping(void){
 		}
 	}
 
-	printf("Metrics for Device 0 (highest priority)\n\t+ Avg Response Time: %f\n\t+ Avg Turnaround Time: %f\n\t+ Miss Percentage: %f\n", AvgResponseTimePerDevice[0], AvgTurnaroundTimePerDevice[0], MissPercentagePerDevice[0]);
-	printf("\t+ Total Events: %d\n\t+ Events Missed: %d\n", EventsTotalPerDevice[0], EventsMissedPerDevice[0]);
+	printf("Metrics for Device 0 (highest priority)\n\t+ Avg Response Time: %f\n\t+ Avg Turnaround Time: %f\n\t+ Miss Percentage: %f%\n", AvgResponseTimePerDevice[0], AvgTurnaroundTimePerDevice[0], MissPercentagePerDevice[0] * 100);
+	printf("\t+ Total Events: %f\n\t+ Events Served: %f\n", EventsTotalPerDevice[0], EventsServedPerDevice[0]);
 	printf("\n\t***\t\n");
-	printf("Metrics for Device %d (lowest priority)\n\t+ Avg Response Time: %f\n\t+ Avg Turnaround Time: %f\n\t+ Miss Percentage: %f\n", low, AvgResponseTimePerDevice[low], AvgTurnaroundTimePerDevice[low], MissPercentagePerDevice[low]);
-	printf("\t+ Total Events: %d\n\t+ Events Missed: %d\n", EventsTotalPerDevice[low], EventsMissedPerDevice[low]);
+	printf("Metrics for Device %d (lowest priority)\n\t+ Avg Response Time: %f\n\t+ Avg Turnaround Time: %f\n\t+ Miss Percentage: %f%\n", low, AvgResponseTimePerDevice[low], AvgTurnaroundTimePerDevice[low], MissPercentagePerDevice[low] * 100);
+	printf("\t+ Total Events: %f\n\t+ Events Missed: %f\n", EventsTotalPerDevice[low], EventsMissedPerDevice[low]);
 
 	printf("\n\t***\t\n");
 
 	for ( i = 1; i < low; i++){
 
-		printf("Metrics for Device %d (middle priority)\nAvg Response Time: %f\nAvg Turnaround Time: %f\nMiss Percentage: %f\n", i, AvgResponseTimePerDevice[i], AvgTurnaroundTimePerDevice[i], MissPercentagePerDevice[i]);
+		printf("Metrics for Device %d (middle priority)\nAvg Response Time: %f\nAvg Turnaround Time: %f\nMiss Percentage: %f%\n", i, AvgResponseTimePerDevice[i], AvgTurnaroundTimePerDevice[i], MissPercentagePerDevice[i] * 100);
 		printf("\n\t***\t\n");
 	}
 }
