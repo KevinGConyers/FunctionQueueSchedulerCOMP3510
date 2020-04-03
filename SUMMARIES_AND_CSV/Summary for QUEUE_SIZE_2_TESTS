@@ -1,0 +1,162 @@
+Summary for DEVICES_2 LAMBA 2 MU_30 with QUEUE_SIZE_2_TESTS
+NumberDevices = 2   lambda = 2.000000  mu = 0.300000   Show = 1
+Metrics for Device 0 (highest priority)
+	+ Avg Response Time: 0.002076
+	+ Avg Turnaround Time: 0.591791
+	+ Miss Percentage: 10.000000%
+	+ Total Events: 100.000000
+	+ Events Missed: 10.000000
+Metrics for Device 1 (lowest priority)
+	+ Avg Response Time: 0.001920
+	+ Avg Turnaround Time: 0.652572
+	+ Miss Percentage: 8.000000%
+	+ Total Events: 100.000000
+	+ Events Missed: 8.000000
+
+
+	***
+
+Summary for DEVICES_2 LAMBA 2 MU_60 with QUEUE_SIZE_2_TESTS
+NumberDevices = 2   lambda = 2.000000  mu = 0.600000   Show = 1
+Metrics for Device 0 (highest priority)
+	+ Avg Response Time: 0.002108
+	+ Avg Turnaround Time: 1.047442
+	+ Miss Percentage: 32.000000%
+	+ Total Events: 100.000000
+	+ Events Missed: 32.000000
+Metrics for Device 1 (lowest priority)
+	+ Avg Response Time: 0.001971
+	+ Avg Turnaround Time: 1.172812
+	+ Miss Percentage: 25.000000%
+	+ Total Events: 100.000000
+	+ Events Missed: 25.000000
+
+
+	***
+
+Summary for DEVICES_2 LAMBA 2 MU_90 with QUEUE_SIZE_2_TESTS
+NumberDevices = 2   lambda = 2.000000  mu = 0.900000   Show = 1
+Metrics for Device 0 (highest priority)
+	+ Avg Response Time: 0.002131
+	+ Avg Turnaround Time: 1.784231
+	+ Miss Percentage: 36.000000%
+	+ Total Events: 100.000000
+	+ Events Missed: 36.000000
+Metrics for Device 1 (lowest priority)
+	+ Avg Response Time: 0.001989
+	+ Avg Turnaround Time: 2.025851
+	+ Miss Percentage: 50.000000%
+	+ Total Events: 100.000000
+	+ Events Missed: 50.000000
+
+
+	***
+
+Summary for DEVICES_4 LAMBA 2 MU_30 with QUEUE_SIZE_2_TESTS
+NumberDevices = 4   lambda = 2.000000  mu = 0.150000   Show = 1
+Metrics for Device 0 (highest priority)
+	+ Avg Response Time: 0.002045
+	+ Avg Turnaround Time: 0.274546
+	+ Miss Percentage: 3.000000%
+	+ Total Events: 100.000000
+	+ Events Missed: 3.000000
+Metrics for Device 3 (lowest priority)
+	+ Avg Response Time: 0.002314
+	+ Avg Turnaround Time: 0.333234
+	+ Miss Percentage: 2.000000%
+	+ Total Events: 100.000000
+	+ Events Missed: 2.000000
+
+
+	***
+
+Summary for DEVICES_4 LAMBA 2 MU_60 with QUEUE_SIZE_2_TESTS
+NumberDevices = 4   lambda = 2.000000  mu = 0.300000   Show = 1
+Metrics for Device 0 (highest priority)
+	+ Avg Response Time: 0.002083
+	+ Avg Turnaround Time: 0.673888
+	+ Miss Percentage: 10.000000%
+	+ Total Events: 100.000000
+	+ Events Missed: 10.000000
+Metrics for Device 3 (lowest priority)
+	+ Avg Response Time: 0.002290
+	+ Avg Turnaround Time: 0.897989
+	+ Miss Percentage: 16.000000%
+	+ Total Events: 100.000000
+	+ Events Missed: 16.000000
+
+
+	***
+
+Summary for DEVICES_4 LAMBA 2 MU_90 with QUEUE_SIZE_2_TESTS
+NumberDevices = 4   lambda = 2.000000  mu = 0.450000   Show = 1
+Metrics for Device 0 (highest priority)
+	+ Avg Response Time: 0.002131
+	+ Avg Turnaround Time: 1.053805
+	+ Miss Percentage: 20.000000%
+	+ Total Events: 100.000000
+	+ Events Missed: 20.000000
+Metrics for Device 3 (lowest priority)
+	+ Avg Response Time: 0.002281
+	+ Avg Turnaround Time: 2.177059
+	+ Miss Percentage: 28.000000%
+	+ Total Events: 100.000000
+	+ Events Missed: 28.000000
+
+
+	***
+
+Summary for DEVICES_8 LAMBA 4 MU_30 with QUEUE_SIZE_2_TESTS
+NumberDevices = 8   lambda = 4.000000  mu = 0.150000   Show = 1
+Metrics for Device 0 (highest priority)
+	+ Avg Response Time: 0.003912
+	+ Avg Turnaround Time: 0.207062
+	+ Miss Percentage: 0.000000%
+	+ Total Events: 100.000000
+	+ Events Missed: 0.000000
+Metrics for Device 7 (lowest priority)
+	+ Avg Response Time: 0.004357
+	+ Avg Turnaround Time: 0.313969
+	+ Miss Percentage: 0.000000%
+	+ Total Events: 100.000000
+	+ Events Missed: 0.000000
+
+
+	***
+
+Summary for DEVICES_8 LAMBA 6 MU_60 with QUEUE_SIZE_2_TESTS
+NumberDevices = 8   lambda = 6.000000  mu = 0.450000   Show = 1
+Metrics for Device 0 (highest priority)
+	+ Avg Response Time: 0.005578
+	+ Avg Turnaround Time: 0.881166
+	+ Miss Percentage: 2.000000%
+	+ Total Events: 100.000000
+	+ Events Missed: 2.000000
+Metrics for Device 7 (lowest priority)
+	+ Avg Response Time: 0.006445
+	+ Avg Turnaround Time: 1.893158
+	+ Miss Percentage: 10.000000%
+	+ Total Events: 100.000000
+	+ Events Missed: 10.000000
+
+
+	***
+
+Summary for DEVICES_8 LAMBA 6 MU_90 with QUEUE_SIZE_2_TESTS
+NumberDevices = 8   lambda = 6.000000  mu = 0.675000   Show = 1
+Metrics for Device 0 (highest priority)
+	+ Avg Response Time: 0.005812
+	+ Avg Turnaround Time: 1.524575
+	+ Miss Percentage: 7.000000%
+	+ Total Events: 100.000000
+	+ Events Missed: 7.000000
+Metrics for Device 7 (lowest priority)
+	+ Avg Response Time: 0.006480
+	+ Avg Turnaround Time: 5.320878
+	+ Miss Percentage: 35.000000%
+	+ Total Events: 100.000000
+	+ Events Missed: 35.000000
+
+
+	***
+
