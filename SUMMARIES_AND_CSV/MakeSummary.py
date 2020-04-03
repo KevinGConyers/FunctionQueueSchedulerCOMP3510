@@ -40,9 +40,9 @@ def MakeCSV(summary_file, csv_file):
 					line = re.sub('[a-z]+', '', line)
 					line = line.strip()
 					parts = line.split('=')
-					column_list[0] = re.sub('[A-Z][a-z]', ' ', parts[0])
-					column_list[1] = re.sub('[A-Z][a-z]', ' ', parts[1])
-					column_list[2] = re.sub('[A-Z][a-z]', ' ', parts[2])
+					column_list[0] = re.sub('[A-Z][a-z]', ' ', parts[1])
+					column_list[1] = re.sub('[A-Z][a-z]', ' ', parts[2])
+					column_list[2] = re.sub('[A-Z][a-z]', ' ', parts[3])
 					column_list = strip_all(column_list, 0, 3)
 				if 'highest' in line:
 					line = re.sub('[A-Z][a-z]+', '', line)
@@ -71,6 +71,8 @@ def MakeCSV(summary_file, csv_file):
 def get_row(columns, sep):
 	row = ''
 	for col in columns:
+		col = re.sub(',', '', col)
+		col = col.strip()
 		row += '{}{}'.format(col, sep)
 	row = row[:-1] 
 	if row[0] is ',':
