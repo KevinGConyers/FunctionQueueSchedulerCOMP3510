@@ -51,7 +51,6 @@ def MakeCSV(summary_file, csv_file):
 
 					column_list[3] = data.next().split(':')[1].strip()
 					column_list[4] = data.next().split(':')[1].strip()
-					consume = data.next()
 					column_list[5] = data.next().split(':')[1].strip()
 				if 'lowest' in line:
 					line = re.sub('[A-Z][a-z]+', '', line)
@@ -60,7 +59,6 @@ def MakeCSV(summary_file, csv_file):
 
 					column_list[6] =  data.next().split(':')[1].strip()
 					column_list[7] =  data.next().split(':')[1].strip()
-					consume = data.next()
 					column_list[8] =  data.next().split(':')[1].strip()
 					column_list = strip_all(column_list, 0, 3)
 				if '***' in line:
@@ -100,6 +98,17 @@ def AddCsvHeader(filename):
 	with open (filename, 'a') as outfile:
 		outfile.write(get_row(column_list, comma))
 
+def CombineCsvs(csv_list):
+	master_output = "FinalCSV.txt"
+	for file_name in csv_list:
+		with open(master_output, "a") as out:
+			out.write("{}\n".format(file_name))
+			with open(file_name) as inp:
+				for line in inp:
+					out.write(line)
+			out.write("\n")
+
+
 
 def main():
 	test_slugs = ['QUEUE_SIZE_2_TESTS', 'QUEUE_SIZE_8_TESTS']
@@ -112,9 +121,11 @@ def main():
 			[8, 4, 30],
 			[8, 6, 60],
 			[8, 6, 90] ]
+	csv_list = []
 	for slug in test_slugs:	
 		summary_file_name = 'Summary for {}'.format(slug)
 		csv_file_name = 'CSV for {}'.format(slug)
+		csv_list.append(csv_file_name)
 		if os.path.isfile(summary_file_name):
 			os.remove(summary_file_name)
 		if os.path.isfile(csv_file_name):
@@ -125,6 +136,7 @@ def main():
 			test_file_path = '/home/u3/kgc0019/COMP3510/projects/lab3/{}/TEST_RESULTS/{}'.format(slug, test_file_name)
 			MakeSummary(slug, summary_file_name, test_file_path, test_file_name)
 			MakeCSV(summary_file_name, csv_file_name)
+	CombineCsvs(csv_list)
 
 
 
