@@ -73,7 +73,9 @@ def get_row(columns, sep):
 	for col in columns:
 		row += '{}{}'.format(col, sep)
 	row = row[:-1] 
-	row = row[1:]
+	if row[0] is ',':
+		row = row[1:]
+	row = row.strip()
 	row = row + '\n'
 	return row
 
