@@ -51,7 +51,8 @@ def MakeCSV(summary_file, csv_file):
 
 					column_list[3] = data.next().split(':')[1].strip()
 					column_list[4] = data.next().split(':')[1].strip()
-					column_list[5] = data.next().split(':')[1].strip()
+					column_list[5] = data.next().split(':')[1].strip()[:-1]
+					column_list[5] = column_list[5][:-1]
 				if 'lowest' in line:
 					line = re.sub('[A-Z][a-z]+', '', line)
 					line = re.sub('[a-z]+', '', line)
@@ -60,6 +61,7 @@ def MakeCSV(summary_file, csv_file):
 					column_list[6] =  data.next().split(':')[1].strip()
 					column_list[7] =  data.next().split(':')[1].strip()
 					column_list[8] =  data.next().split(':')[1].strip()
+					column_list[8] = column_list[8][:-1]
 					column_list = strip_all(column_list, 0, 3)
 				if '***' in line:
 					csv.write(get_row(column_list, comma))
@@ -100,6 +102,9 @@ def AddCsvHeader(filename):
 
 def CombineCsvs(csv_list):
 	master_output = "FinalCSV.txt"
+	if os.path.isfile(master_output):
+			os.remove(master_output)
+
 	for file_name in csv_list:
 		with open(master_output, "a") as out:
 			out.write("{}\n".format(file_name))
